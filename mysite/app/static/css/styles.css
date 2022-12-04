@@ -1,0 +1,53 @@
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    width: 250px;
+    height: 30px;
+    margin-top: 10px;
+}
+
+.content_container { 
+    display: flex;
+    justify-content: space-between;
+}
+
+.logout {
+    display: flex;
+    justify-content: center;
+    margin-top: 30vh;
+}
+
+.logout_left h2{
+    margin-right: 20px;
+    color: blue;
+}
+.logout_left h4{
+    text-align: center;
+}
+
+.logout_right { 
+    margin-left: 20px;
+}
+
+.announce {
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.announce-item {
+    width: 350px;
+}
+
+.announce-item p:nth-child(2n+1) {
+    color: blue;
+    margin-left: 50%;
+}
+
+.comment_area {
+    resize: none;
+    tab-size: 4;
+}

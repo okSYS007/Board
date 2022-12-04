@@ -1,0 +1,55 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="announce_detail">
+        <span>
+            <h4>{{Announcement.Announcement_author}}
+                {% if Announcement.Announcement_author == user %}
+                    <a href="/announce/{{Announcement.id}}/comments">Комментарии</a>
+                    <a href="/announce/{{Announcement.id}}/edit">Редактировать </a>
+                    <a href="/announce/{{Announcement.id}}/delete">Удалить</a>
+                {% endif %}
+            </h4>
+        </span>
+        
+        <h2>{{Announcement.Announcement_title}}</h2> 
+        <h4>{{Announcement.Announcement_text}}</h4>
+        
+        {% for file in dataFiles%}
+            <div class="announce_media">
+                
+                {% if "img" == file.type %}
+                    <img width="320" height = "240" src="{{ MEDIA_URL }}{{file.name}}" alt="img">
+                {% else %}
+                    <video controls="controls" width="320" height="240" preload="preload"> 
+                        <source src="{{ MEDIA_URL }}{{file.name}}" type="video/mp4"></source>
+                    </video> 
+                {% endif %}
+
+            </div>
+        {% endfor %}
+
+        <p>{{Announcement.Creation_date}}</p>
+        
+        <div class = "announce_comments">
+            {% for comment in comments%}
+                <p>{{comment.User}}</p>
+                <p>{{comment.Comment}}</p>
+                <p>{{comment.Comment_date}}</p>
+            {% endfor %}
+        </div>
+        
+        <form method="Post"> {% csrf_token %}
+            <div class = "Add_Comment">
+
+                <textarea class = "comment_area" id="CommentInput" name = "CommentArea"></textarea>
+                <br>
+                <button name = "AddComment">Добавить комментарий</button>
+            </div>
+        </form>
+
+    </div>
+{% endblock %}
+

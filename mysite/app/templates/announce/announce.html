@@ -1,0 +1,18 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    <h1>Объявления: </h1>
+    <div class="announce">
+        {% for Announce in Announcement %}
+            <div class = "announce-item">
+                <a href="{{Announce.id}}"><h1>{{ Announce.Announcement_title }}</h1></a>
+                <p>{{ Announce.Announcement_text|linebreaksbr }}</p>
+                <p>{{ Announce.Creation_date }}</p>
+                <hr style="width:75%;text-align:left;margin-left:0">
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

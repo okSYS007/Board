@@ -1,0 +1,40 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="announce_detail">
+    <h2>{{Announcement.Announcement_title}}</h2>
+    <h4>{{Announcement.Announcement_text}}</h4>
+    <p>{{Announcement.Creation_date}}</p>
+</div>
+
+<h1>Comments to add</h1>
+<hr>
+{% if Comments%}
+    
+    <form method="post">{% csrf_token %}
+        
+        {% for comment in Comments%}
+            {% if AllComments %}
+                <div class="announce_detail">
+                    <h2>{{comment.Announcement.Announcement_title}}</h2>
+                    <h4>{{comment.Announcement.Announcement_text}}</h4>
+                    <p> {{comment.Announcement.Creation_date}}</p>
+                </div>
+            {% endif %}
+            <p>
+                {{comment.Comment}} 
+                <br>
+                {{comment.Comment_date}}
+            </p>
+            <button name = "Accept" value={{comment.id}}>Accept</button> <button name = "Denied" value={{comment.id}}>Denied</button>
+        {% endfor %}
+        
+    </form>
+{% else %}
+    <h2>No comments</h2>
+{% endif %}
+
+{% endblock %}

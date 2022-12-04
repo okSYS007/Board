@@ -73,10 +73,21 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
@@ -133,8 +144,43 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = '/announce/'
+
+LOGIN_REDIRECT_URL = '/announce/'
 LOGOUT_REDIRECT_URL = 'home'
 
-LOGIN_URL = '/registration/login/'
-LOGIN_REDIRECT_URL = '/'
+
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static')
+# ]
+STATICFILES_DIRS = [
+    BASE_DIR / "app/static"
+]
+
+MEDIA_ROOT= os.path.join('media/')
+MEDIA_URL= "/media/"
+
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
+ADMINS = [('Slava', 'ViacheslavDan803@gmail.com')]
+
+EMAIL_HOST = 'smtp.gmail.com' 
+EMAIL_PORT = 465 
+EMAIL_HOST_USER = 'ViacheslavDan803@gmail.com' 
+EMAIL_HOST_PASSWORD = 'kfjrkbbcneqkijkr' 
+EMAIL_USE_SSL = True 
+
+
+
+# DEFAULT_FROM_EMAIL = '' 
