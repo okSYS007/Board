@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, redirect
-from django.views.generic import DetailView
-from .models import Profile
+# from django.views.generic import DetailView
+# from .models import Profile
 
 def index(request):
     """
@@ -15,7 +15,7 @@ def index(request):
         context={},
     )
 
-class ProfileDetailView(DetailView):
-    model = Profile
-    template_name = 'profile.html'
-    context_object_name = 'profile'
+# class ProfileDetailView(DetailView):
+#     model = Profile
+#     template_name = 'profile.html'
+#     context_object_name = 'profile'
