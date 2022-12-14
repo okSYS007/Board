@@ -1,0 +1,45 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+<div class="logout">
+  
+  <div class="logout_left">
+    <h2>BEST MMO RPG EVER</h2>
+    <h4>Copyrights reserverd ©</h4>
+  </div>
+
+  <div class="logout_right">
+
+    {% if user.is_authenticated %}
+      <h2>Hi, {{user.username}}</h2>
+      <form method = "post">
+        {% csrf_token %}
+        <input type="submit" value="logout">
+      </form>
+    {% else %}
+      <form method = "post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Login">
+      </form>
+    
+      <a href="users/signup/">
+        <button>
+          Register
+        </button>
+      </a>
+
+      <a href="register_code">
+        <button>
+          Code
+        </button>
+      </a>
+    
+    {% endif %}
+
+  </div>
+
+</div>
+
+{% endblock %}
