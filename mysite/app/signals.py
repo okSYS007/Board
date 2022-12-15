@@ -27,7 +27,7 @@ def confirm_code_registration(sender, instance, created, **kwargs):
     Send confirmation code to new users
     """
     if created:
-        code_Obj = OneTimeCode.objects.create(MyUser = instance)
+        code_Obj = OneTimeCode.objects.create(User = instance)
         #doing loop with hope that old cods will be deleted =)
         CodeAccepted = False
         while not CodeAccepted:

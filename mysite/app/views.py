@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from requests import request
-from .models import Announcement, Files, Comments, MyUser
+from .models import Announcement, Files, Comments, MyUser, OneTimeCode
 from .forms import AnnouncementForm, InputForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -207,7 +207,8 @@ class AnnounceComment(LoginRequiredMixin, ListView):
 def register_code_view(request):
     context ={}
     
-    if request.method == 'POST':
-        pass
+    if request.method == 'POST' and request.POST.get('Activate') != '':
+        #check code
+        OneTimeCode.objects.filter(User = request.User, Code = request.POST.get('Activate'))
 
     return render(request, "account/register_code.html", context)
