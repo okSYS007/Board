@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from requests import request
-from .models import Announcement, Files, Comments, User
+from .models import Announcement, Files, Comments, MyUser
 from .forms import AnnouncementForm, InputForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin

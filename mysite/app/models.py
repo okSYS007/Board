@@ -1,11 +1,12 @@
 
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from users.models import MyUser
 from django.urls import reverse
 
 class Announcement(models.Model):
     
-    Announcement_author = models.ForeignKey(User, on_delete=models.CASCADE)
+    Announcement_author = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     Creation_date = models.DateTimeField(auto_now_add=True)
     Announcement_title = models.CharField(max_length=255)
     Announcement_text = models.TextField(default='content')
@@ -57,7 +58,7 @@ class Files(models.Model):
 class Comments(models.Model):
 
     Announcement = models.ForeignKey(Announcement, on_delete = models.CASCADE)
-    User = models.ForeignKey(User, on_delete=models.CASCADE)
+    User = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     Comment = models.TextField(default='comment')
     Comment_date = models.DateTimeField(auto_now_add=True)
     Comment_accepted = models.BooleanField(default = False)
@@ -67,7 +68,7 @@ class Comments(models.Model):
 
 class OneTimeCode(models.Model):
 
-    User = models.ForeignKey(User, on_delete=models.CASCADE)
+    User = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     Code = models.CharField(default="", max_length = 4)
 
     def __str__(self):

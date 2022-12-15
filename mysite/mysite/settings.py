@@ -181,6 +181,5 @@ EMAIL_HOST_USER = 'ViacheslavDan803@gmail.com'
 EMAIL_HOST_PASSWORD = 'kfjrkbbcneqkijkr' 
 EMAIL_USE_SSL = True 
 
-
-
+AUTH_USER_MODEL = 'users.MyUser'
 # DEFAULT_FROM_EMAIL = '' 

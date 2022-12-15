@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 from django.db.models.signals import pre_delete, post_save
 from django.core.mail import EmailMultiAlternatives
 from django.dispatch import receiver
-from .models import Announcement, Files, User, OneTimeCode
+from .models import Announcement, Files, OneTimeCode, MyUser
 
 from django.template.loader import render_to_string
 
@@ -21,13 +21,13 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
             os.remove(file.File.path)
 
 
-@receiver(post_save, sender = User)
+@receiver(post_save, sender = MyUser)
 def confirm_code_registration(sender, instance, created, **kwargs):
     """
     Send confirmation code to new users
     """
     if created:
-        code_Obj = OneTimeCode.objects.create(User = instance)
+        code_Obj = OneTimeCode.objects.create(MyUser = instance)
         #doing loop with hope that old cods will be deleted =)
         CodeAccepted = False
         while not CodeAccepted:
