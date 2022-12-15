@@ -23,9 +23,14 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', home_view, name='login'),
     path('admin/', admin.site.urls),
+<<<<<<< HEAD:Board/Board/urls.py
+    path('accounts/', include('allauth.urls')),
+]
+=======
     path('users/', include('users.urls')),
     path('announce/', include('app.urls')),
     path('comments/', AnnounceComment.as_view()),
     path('announce_create/', AnnounceCreate.as_view()),
     path('register_code/', register_code_view),
 ] + static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
+>>>>>>> a5db8ab079d94973cd2105638df1ad7846dab774:mysite/mysite/urls.py
