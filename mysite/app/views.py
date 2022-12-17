@@ -1,19 +1,31 @@
 
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
-from requests import request
 from .models import Announcement, Files, Comments, MyUser, OneTimeCode
 from .forms import AnnouncementForm, InputForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import PermissionDenied
 
-class ConfirmedEmailMixin:
+def register_code_view(request):
+    context ={}
+    
+    if request.method == 'POST' and request.POST.get('Activate') != '':
+        #check code
+        if OneTimeCode.objects.filter(User = request.user, Code = request.POST.get('Activate')).exists():
+            UserObject = MyUser.objects.filter(id = request.user.id)[0]
+            UserObject.user_status = True
+            UserObject.save()
+            return redirect('/')
+
+    return render(request, "account/register_code.html", context)
+
+class ConfirmedUserMixin:
+   
     def dispatch(self, request, *args, **kwargs):
-        if self.user:
+        if request.user.is_superuser or request.user.user_status:
             return super().dispatch(request, *args, **kwargs)
         else:
-            raise PermissionDenied
+            return redirect(register_code_view)
 
 def home_view(request):
     context ={}
@@ -41,7 +53,7 @@ def home_view(request):
         
     return render(request, "home.html", context)
 
-class AnnounceCreate(ConfirmedEmailMixin, CreateView):
+class AnnounceCreate(ConfirmedUserMixin, CreateView):
     login_url = '/'
     model = Announcement
     template_name = 'announce/announce_create.html'
@@ -190,29 +202,21 @@ class AnnounceComment(LoginRequiredMixin, ListView):
     def post(self, request, *args, **kwargs):
         
         if request.method == 'POST':
+            pk = None
             buttonAcceptPressed =  request.POST.get("Accept")
             buttonDeniedPressed = request.POST.get("Denied")
             if buttonAcceptPressed is not None:
                 objComment = Comments.objects.get(id = buttonAcceptPressed)
                 objComment.Comment_accepted = True
                 objComment.save()
+                pk = objComment.Announcement_id
             elif buttonDeniedPressed is not None:
                 objComment = Comments.objects.get(id = buttonDeniedPressed)
                 objComment.delete()
             else:
                 pass
-
-            return redirect('/announce/' + str(kwargs['pk']) +"/comments")
-
-def register_code_view(request):
-    context ={}
-    
-    if request.method == 'POST' and request.POST.get('Activate') != '':
-        #check code
-        if OneTimeCode.objects.filter(User = request.user, Code = request.POST.get('Activate')).exists():
-            UserObject = MyUser.objects.filter(id = request.user.id)[0]
-            UserObject.user_status = True
-            UserObject.save()
-            #return render()
-
-    return render(request, "account/register_code.html", context)
+            
+            if pk is not None:
+                return redirect('/announce/' + str(pk) +"/comments")
+            else:
+                return redirect('/announce/' + str(kwargs['pk']) +"/comments")
