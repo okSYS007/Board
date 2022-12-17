@@ -20,7 +20,6 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
         if os.path.isfile(file.File.path):
             os.remove(file.File.path)
 
-
 @receiver(post_save, sender = MyUser)
 def confirm_code_registration(sender, instance, created, **kwargs):
     """
@@ -66,3 +65,4 @@ def confirm_code_registration(sender, instance, created, **kwargs):
         msg.send() # отсылаем
 
     return redirect('/announce/')
+

@@ -11,10 +11,12 @@ def register_code_view(request):
     
     if request.method == 'POST' and request.POST.get('Activate') != '':
         #check code
-        if OneTimeCode.objects.filter(User = request.user, Code = request.POST.get('Activate')).exists():
+        OneTimeCodeObj = OneTimeCode.objects.filter(User = request.user, Code = request.POST.get('Activate'))
+        if OneTimeCodeObj.exists():
             UserObject = MyUser.objects.filter(id = request.user.id)[0]
             UserObject.user_status = True
             UserObject.save()
+            OneTimeCodeObj.delete()
             return redirect('/')
 
     return render(request, "account/register_code.html", context)
