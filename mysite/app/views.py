@@ -127,8 +127,10 @@ class AnnouncemenDetailView(DetailView):
         return context 
 
     def post(self, request, *args, **kwargs):
-        if request.user.is_authenticated == False:
-            return redirect('/')
+        #Проверка на супер права + проверка на статус активированного аккаунта по коду
+        if not request.user.is_superuser:
+            if not request.user.user_status:
+                return redirect(register_code_view)
         self.object = self.get_object()
         if request.method == 'POST':
             buttonAddCommentPressed = request.POST.get("AddComment")
@@ -178,7 +180,7 @@ class AnnouncementDelete(LoginRequiredMixin, DeleteView):
     template_name = 'announce/announce_delete.html'
     success_url = "/announce/"
 
-class AnnounceComment(LoginRequiredMixin, ListView):
+class AnnounceComment(LoginRequiredMixin, ConfirmedUserMixin, ListView):
     login_url = '/'
     model = Comments
     template_name = 'announce/announce_comments.html'
