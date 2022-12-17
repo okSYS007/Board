@@ -198,7 +198,8 @@ class AnnounceComment(LoginRequiredMixin, ConfirmedUserMixin, ListView):
 
     def get_queryset(self):
         if "announce" not in self.request.path:
-            queryset = Comments.objects.filter(Comment_accepted = False)
+            Posts = Announcement.objects.filter(Announcement_author = self.request.user)
+            queryset = Comments.objects.filter(Announcement__in = Posts, Comment_accepted = False)
         else:
             queryset = Comments.objects.filter(Announcement = Announcement.objects.get(id = str(self.kwargs['pk'])), Comment_accepted = False)
         return queryset
@@ -216,6 +217,7 @@ class AnnounceComment(LoginRequiredMixin, ConfirmedUserMixin, ListView):
                 pk = objComment.Announcement_id
             elif buttonDeniedPressed is not None:
                 objComment = Comments.objects.get(id = buttonDeniedPressed)
+                pk = objComment.Announcement_id
                 objComment.delete()
             else:
                 pass
