@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    "django_apscheduler",
 
 ]
 
@@ -191,3 +192,8 @@ EMAIL_USE_SSL = True
 
 AUTH_USER_MODEL = 'users.MyUser'
 # DEFAULT_FROM_EMAIL = '' 
+
+
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+ 
+APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
