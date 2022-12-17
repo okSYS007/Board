@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 from django.db.models.signals import pre_delete, post_save
 from django.core.mail import EmailMultiAlternatives
 from django.dispatch import receiver
-from .models import Announcement, Files, OneTimeCode, MyUser
+from .models import Announcement, Files, OneTimeCode, MyUser, Comments
 
 from django.template.loader import render_to_string
 
@@ -66,3 +66,47 @@ def confirm_code_registration(sender, instance, created, **kwargs):
 
     return redirect('/announce/')
 
+@receiver(post_save, sender = Comments)
+def email_response_to_user(sender, instance, created, **kwargs):
+    """
+    Send email for accepted comment
+    """
+    if created:
+        html_content = render_to_string( 
+            'announce/comment_added.html',
+            {
+                'post_id': instance.Announcement_id,
+                'post_title': instance.Announcement.Announcement_title,
+                'user': instance.Announcement.Announcement_author,
+            }
+        )
+
+        msg = EmailMultiAlternatives(
+            subject=f'Новый отклик к посту',
+            body="", #  это то же, что и message
+            from_email='ViacheslavDan803@gmail.com',
+            to=[instance.Announcement.Announcement_author.email], # это то же, что и recipients_list
+        )
+        msg.attach_alternative(html_content, "text/html") # добавляем html
+
+        msg.send() # отсылаем
+    else:
+        if instance.Comment_accepted:
+            html_content = render_to_string( 
+                'announce/comment_accepted.html',
+                {
+                    'post_id': instance.Announcement_id,
+                    'post_title': instance.Announcement.Announcement_title,
+                    'user': instance.User.username,
+                }
+            )
+
+            msg = EmailMultiAlternatives(
+                subject=f'Отклик к посту',
+                body="", #  это то же, что и message
+                from_email='ViacheslavDan803@gmail.com',
+                to=[instance.User.email], # это то же, что и recipients_list
+            )
+            msg.attach_alternative(html_content, "text/html") # добавляем html
+
+            msg.send() # отсылаем
