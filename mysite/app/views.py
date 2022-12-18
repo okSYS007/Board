@@ -5,29 +5,7 @@ from .models import Announcement, Files, Comments, MyUser, OneTimeCode
 from .forms import AnnouncementForm, InputForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-def register_code_view(request):
-    context ={}
-    
-    if request.method == 'POST' and request.POST.get('Activate') != '':
-        #check code
-        OneTimeCodeObj = OneTimeCode.objects.filter(User = request.user, Code = request.POST.get('Activate'))
-        if OneTimeCodeObj.exists():
-            UserObject = MyUser.objects.filter(id = request.user.id)[0]
-            UserObject.user_status = True
-            UserObject.save()
-            OneTimeCodeObj.delete()
-            return redirect('/')
-
-    return render(request, "account/register_code.html", context)
-
-class ConfirmedUserMixin:
-   
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_superuser or request.user.user_status:
-            return super().dispatch(request, *args, **kwargs)
-        else:
-            return redirect(register_code_view)
+from django.contrib.auth.decorators import login_required
 
 def home_view(request):
     context ={}
@@ -55,7 +33,31 @@ def home_view(request):
         
     return render(request, "home.html", context)
 
-class AnnounceCreate(ConfirmedUserMixin, CreateView):
+@login_required(login_url='/')
+def register_code_view(request):
+    context ={}
+    
+    if request.method == 'POST' and request.POST.get('Activate') != '':
+        #check code
+        OneTimeCodeObj = OneTimeCode.objects.filter(User = request.user, Code = request.POST.get('Activate'))
+        if OneTimeCodeObj.exists():
+            UserObject = MyUser.objects.filter(id = request.user.id)[0]
+            UserObject.user_status = True
+            UserObject.save()
+            OneTimeCodeObj.delete()
+            return redirect('/')
+
+    return render(request, "account/register_code.html", context)
+
+class ConfirmedUserMixin:
+   
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_superuser or request.user.user_status:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            return redirect(register_code_view)
+
+class AnnounceCreate(LoginRequiredMixin, ConfirmedUserMixin, CreateView):
     login_url = '/'
     model = Announcement
     template_name = 'announce/announce_create.html'
@@ -130,6 +132,8 @@ class AnnouncemenDetailView(DetailView):
 
     def post(self, request, *args, **kwargs):
         #Проверка на супер права + проверка на статус активированного аккаунта по коду
+        if not request.user.is_authenticated:
+            return redirect(home_view)
         if not request.user.is_superuser:
             if not request.user.user_status:
                 return redirect(register_code_view)

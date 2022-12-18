@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/mysite/manage.py",
             "args": [
-                "runapscheduler"
+                "runserver"
             ],
             "django": true,
             "justMyCode": true
