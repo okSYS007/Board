@@ -1,15 +1,18 @@
 
 header {
     display: flex;
-    justify-content: space-around;
-    width: 250px;
+    justify-content: space-between;
     height: 30px;
     margin-top: 10px;
 }
 
-.User_info {
-    margin-right:auto;
-    background-color: blue;
+header a {
+    padding: 5px;
+}
+
+header p {
+    margin-top: auto;
+    margin-left:auto;
 }
 
 .content_container { 
@@ -55,4 +58,11 @@ header {
 .comment_area {
     resize: none;
     tab-size: 4;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    background-color: blue;
+    width: 99%;
 }

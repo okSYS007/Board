@@ -17,13 +17,13 @@
       <a href="/comments">Comments</a>
       <a href="/announce_create">Create post</a>
       
-      <div class = "User_info">
+      <p>
         {% if user.is_authenticated %}
           Hi, {{user}}
         {% else %}
           Hi, anonimous
         {% endif %}
-    </div>
+      </p>
      
    
   </header>
@@ -34,5 +34,8 @@
 
   </main>
 
+    <footer>
+      hello footer
+    </footer>
 </body>
 </html>
