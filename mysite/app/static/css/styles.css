@@ -1,10 +1,15 @@
 
-.header {
+header {
     display: flex;
     justify-content: space-around;
     width: 250px;
     height: 30px;
     margin-top: 10px;
+}
+
+.User_info {
+    margin-right:auto;
+    background-color: blue;
 }
 
 .content_container { 

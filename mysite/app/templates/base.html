@@ -4,18 +4,28 @@
 
 <html>
 <head>
-  <link rel="stylesheet" href="{% static "css/styles.css" %}" />
+  <link rel="stylesheet" href="/static/css/styles.css?{% now "U" %}"/>
+
   <meta charset="utf-8">
   <title>{% block title %}Best MMORPG Ever{% endblock %}</title>
 </head>
 <body>
   <header>
-    <div class="header">
+    
       <a href="/">Home</a>
       <a href="/announce">Posts</a>
       <a href="/comments">Comments</a>
       <a href="/announce_create">Create post</a>
+      
+      <div class = "User_info">
+        {% if user.is_authenticated %}
+          Hi, {{user}}
+        {% else %}
+          Hi, anonimous
+        {% endif %}
     </div>
+     
+   
   </header>
   <main>  
     
