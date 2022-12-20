@@ -72,6 +72,13 @@ header p {
     align-items: center;
 }
 
+.comments {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
 .comment_area {
     resize: none;
     tab-size: 4;

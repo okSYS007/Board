@@ -8,13 +8,13 @@
     <h2>{{Announcement.Announcement_title}}</h2>
     <h4>{{Announcement.Announcement_text}}</h4>
     <p>{{Announcement.Creation_date}}</p>
+    <h1>Comments to add</h1>
 </div>
-
-<h1>Comments to add</h1>
 <hr>
 
+<div class="comments">
 {% if Comments%}
-
+    
     <form method="GET">
         {{ filter.form }}
         <input type="submit" value="Найти">
@@ -31,13 +31,14 @@
                     <p> {{post.Announcement.Creation_date}}</p>
                 </div>
             {% endif %}
-            <p>
-                {{post.Comment}} 
-                <br>
-                {{post.Comment_date}}
-            </p>
-            <button name = "Accept" value={{post.id}}>Accept</button> <button name = "Denied" value={{post.id}}>Denied</button>
-            
+            <div>
+                <p>
+                    {{post.Comment}} 
+                    <br>
+                    {{post.Comment_date}}
+                </p>
+                <button name = "Accept" value={{post.id}}>Accept</button> <button name = "Denied" value={{post.id}}>Denied</button>
+            </div>
         </form>
 
     {% endfor %}
@@ -45,5 +46,6 @@
 {% else %}
     <h2>No comments</h2>
 {% endif %}
+</div>
 
 {% endblock %}
