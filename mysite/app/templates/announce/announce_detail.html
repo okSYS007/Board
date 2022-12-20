@@ -3,16 +3,17 @@
 {% load static %}
 
 {% block content %}
+<span>
+    <h4>
+        {% if Announcement.Announcement_author == user %}
+            <a href="/announce/{{Announcement.id}}/comments">Комментарии</a>
+            <a href="/announce/{{Announcement.id}}/edit">Редактировать </a>
+            <a href="/announce/{{Announcement.id}}/delete">Удалить</a>
+        {% endif %}
+    </h4>
+</span>
     <div class="announce_detail">
-        <span>
-            <h4>{{Announcement.Announcement_author}}
-                {% if Announcement.Announcement_author == user %}
-                    <a href="/announce/{{Announcement.id}}/comments">Комментарии</a>
-                    <a href="/announce/{{Announcement.id}}/edit">Редактировать </a>
-                    <a href="/announce/{{Announcement.id}}/delete">Удалить</a>
-                {% endif %}
-            </h4>
-        </span>
+        
         
         <h2>{{Announcement.Announcement_title}}</h2> 
         <h4>{{Announcement.Announcement_text}}</h4>
@@ -34,6 +35,7 @@
         <p>{{Announcement.Creation_date}}</p>
         
         <div class = "announce_comments">
+            Comments
             {% for comment in comments%}
                 <p>{{comment.User}}</p>
                 <p>{{comment.Comment}}</p>
