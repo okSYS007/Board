@@ -55,6 +55,11 @@ header p {
     margin-left: 50%;
 }
 
+.announce-create {
+    display: flex;
+    justify-content: center;
+}
+
 .comment_area {
     resize: none;
     tab-size: 4;
