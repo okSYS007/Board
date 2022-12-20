@@ -12,27 +12,36 @@
 
 <h1>Comments to add</h1>
 <hr>
+
 {% if Comments%}
-    
-    <form method="post">{% csrf_token %}
+
+    <form method="GET">
+        {{ filter.form }}
+        <input type="submit" value="Найти">
+    </form>
+
+    {% for post in filter.qs %}
+
+        <form method="post">{% csrf_token %}
         
-        {% for comment in Comments%}
             {% if AllComments %}
                 <div class="announce_detail">
-                    <h2>{{comment.Announcement.Announcement_title}}</h2>
-                    <h4>{{comment.Announcement.Announcement_text}}</h4>
-                    <p> {{comment.Announcement.Creation_date}}</p>
+                    <h2>{{post.Announcement.Announcement_title}}</h2>
+                    <h4>{{post.Announcement.Announcement_text}}</h4>
+                    <p> {{post.Announcement.Creation_date}}</p>
                 </div>
             {% endif %}
             <p>
-                {{comment.Comment}} 
+                {{post.Comment}} 
                 <br>
-                {{comment.Comment_date}}
+                {{post.Comment_date}}
             </p>
-            <button name = "Accept" value={{comment.id}}>Accept</button> <button name = "Denied" value={{comment.id}}>Denied</button>
-        {% endfor %}
-        
-    </form>
+            <button name = "Accept" value={{post.id}}>Accept</button> <button name = "Denied" value={{post.id}}>Denied</button>
+            
+        </form>
+
+    {% endfor %}
+    
 {% else %}
     <h2>No comments</h2>
 {% endif %}

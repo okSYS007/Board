@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
+from .filters import PostFilter
+
 def home_view(request):
     context ={}
     context['form']= InputForm()
@@ -94,7 +96,7 @@ class AnnouncementList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        return context    
+        return context
 
 class AnnouncemenDetailView(DetailView):
     
@@ -195,6 +197,7 @@ class AnnounceComment(LoginRequiredMixin, ConfirmedUserMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['AllComments'] = True
+        context['filter'] = PostFilter(self.request.GET, queryset=self.get_queryset())
         if len(self.kwargs) > 0:
             context['Announcement'] = Announcement.objects.get(id = str(self.kwargs['pk']))
             context['AllComments'] = False

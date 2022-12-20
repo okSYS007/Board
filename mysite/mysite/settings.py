@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    "django_apscheduler",
+    'django_apscheduler',
+    'django_filters',
 
 ]
 
@@ -187,7 +188,7 @@ ADMINS = [('Slava', 'ViacheslavDan803@gmail.com')]
 EMAIL_HOST = 'smtp.gmail.com' 
 EMAIL_PORT = 465 
 EMAIL_HOST_USER = 'ViacheslavDan803@gmail.com' 
-EMAIL_HOST_PASSWORD = 'kfjrkbbcneqkijkr' 
+EMAIL_HOST_PASSWORD = 'arummsbfqupiwxoj' 
 EMAIL_USE_SSL = True 
 
 AUTH_USER_MODEL = 'users.MyUser'
