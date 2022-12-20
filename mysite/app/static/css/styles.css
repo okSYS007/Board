@@ -60,6 +60,12 @@ header p {
     justify-content: center;
 }
 
+.announce-create p {
+    display: flex;
+    flex-direction: column;
+}
+
+
 .comment_area {
     resize: none;
     tab-size: 4;
