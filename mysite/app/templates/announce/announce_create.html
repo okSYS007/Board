@@ -4,13 +4,15 @@
 
 {% block content %}
 
+<div class = "announce-create">
+
 <form method="post" enctype="multipart/form-data">{% csrf_token %}
     {{ form.as_p }}
     <input name = "files" type="file" multiple>
-    <br>
-    <br>
     <input type="submit" value="Save">
 
 </form>
+
+</div>
 
 {% endblock %}

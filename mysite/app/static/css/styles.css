@@ -55,13 +55,24 @@ header p {
     margin-left: 50%;
 }
 
+.announce-create {
+    display: flex;
+    justify-content: center;
+}
+
+.announce-create p {
+    display: flex;
+    flex-direction: column;
+}
+
+.announce_detail {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
 .comment_area {
     resize: none;
     tab-size: 4;
-}
-
-footer {
-    position: absolute;
-    bottom: 0;
-    width: 99%;
 }
