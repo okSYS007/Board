@@ -211,6 +211,7 @@ class AnnounceComment(LoginRequiredMixin, ConfirmedUserMixin, ListView):
             queryset = Comments.objects.filter(Announcement = Announcement.objects.get(id = str(self.kwargs['pk'])), Comment_accepted = False)
         return queryset
     
+
     def post(self, request, *args, **kwargs):
         
         if request.method == 'POST':
