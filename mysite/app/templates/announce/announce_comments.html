@@ -16,11 +16,11 @@
 {% if Comments%}
     
     <form method="GET">
-        {{ filter.form }}
+        {{ myfilter.form }}
         <input type="submit" value="Найти">
     </form>
 
-    {% for post in filter.qs %}
+    {% for post in myfilter.qs %}
 
         <form method="post">{% csrf_token %}
         

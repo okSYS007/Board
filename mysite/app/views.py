@@ -197,7 +197,7 @@ class AnnounceComment(LoginRequiredMixin, ConfirmedUserMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['AllComments'] = True
-        context['filter'] = PostFilter(self.request.GET, queryset=self.get_queryset())
+        context['myfilter'] = PostFilter(self.request.GET, queryset=self.get_queryset())
         if len(self.kwargs) > 0:
             context['Announcement'] = Announcement.objects.get(id = str(self.kwargs['pk']))
             context['AllComments'] = False
