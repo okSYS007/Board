@@ -1,5 +1,5 @@
-from django_filters import FilterSet, AllValuesFilter
-from .models import Comments
+from django_filters import FilterSet
+from .models import Comments, Announcement
  
 class PostFilter(FilterSet):
         
